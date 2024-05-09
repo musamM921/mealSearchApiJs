@@ -27,6 +27,10 @@ function getMealList() {
               </div>
                 `;
                 })
+                
+            } else {
+                html = "Sorry, we didn't find any meal"
+                mealList.classList.add('notFound');
             }
             mealList.innerHTML = html;
         })
