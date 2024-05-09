@@ -4,6 +4,7 @@ const mealDetailsContent = document.querySelector('.meal-details-content')
 const recipeCloseBtn = document.getElementById('recipe-close-btn')
 
 searchBtn.addEventListener('click', getMealList)
+mealList.addEventListener("click", getMealRecipe)
 
 function getMealList() {
     let searchInputTxt = document.getElementById
@@ -27,7 +28,7 @@ function getMealList() {
               </div>
                 `;
                 })
-                
+                mealList.classList.remove('notFound')
             } else {
                 html = "Sorry, we didn't find any meal"
                 mealList.classList.add('notFound');
@@ -35,3 +36,15 @@ function getMealList() {
             mealList.innerHTML = html;
         })
 }
+
+//get recipe of the meal
+function getMealRecipe(e) {
+    e.preventDefault()
+    if(e.target.classList.contains('recipe-btn')){
+        let mealItem = e.target.parentElement.parentElement
+        fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealItem.dataset.id}`)
+        .then(response => response.json())
+        .then(data => mealRecipeModal(data.meals))
+    }
+}
+
